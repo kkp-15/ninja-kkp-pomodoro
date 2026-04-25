@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ポモドーロタイマー｜好きなYouTube動画で集中作業 🍅</title>
+<title>ポモドーロタイマー｜好きなYouTube動画で集中作業</title>
 <meta name="description" content="お気に入りのYouTube動画やBGMを流しながらポモドーロ（25分集中＋5分休憩）ができる無料Webタイマー。URLを貼るだけで即スタート、お気に入り保存・統計機能つき。">
 <meta name="theme-color" content="#ff6b6b">
 <link rel="canonical" href="https://pomodoro.kkpwebninja.com/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🍅%3C/text%3E%3C/svg%3E">
 
-<meta property="og:title" content="ポモドーロタイマー｜好きなYouTube動画で集中作業 🍅">
+<meta property="og:title" content="ポモドーロタイマー｜好きなYouTube動画で集中作業">
 <meta property="og:description" content="お気に入りのYouTube動画を流しながらポモドーロ。URLを貼るだけで即スタート。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://pomodoro.kkpwebninja.com/">
@@ -555,16 +555,16 @@
 <body>
 
 <header>
-  <h1>🍅 ポモドーロタイマー</h1>
-  <p>好きなYouTube動画を流しながら集中作業 ✨</p>
+  <h1>ポモドーロタイマー</h1>
+  <p>好きなYouTube動画を流しながら集中作業</p>
 </header>
 
 <main>
   <div id="stage" class="stage">
     <div id="player-wrap"><div id="player"></div></div>
-    <button id="toggleOverlay" class="toggle-overlay-btn" title="タイマー表示/非表示">👁</button>
+    <button id="toggleOverlay" class="toggle-overlay-btn" title="タイマー表示/非表示">表示</button>
     <section class="timer-card">
-      <span id="modeLabel" class="mode-label mode-focus">🔥 集中タイム</span>
+      <span id="modeLabel" class="mode-label mode-focus">集中タイム</span>
       <div id="timeDisplay" class="time-display">25:00</div>
       <div class="cycle-info">完了ポモドーロ：<span id="cycleCount">0</span> 個</div>
       <div class="time-picker">
@@ -584,8 +584,8 @@
         </div>
       </div>
       <div class="controls">
-        <button id="startBtn" class="btn-primary">▶ スタート</button>
-        <button id="pauseBtn" class="btn-secondary" style="display:none;">⏸ 一時停止</button>
+        <button id="startBtn" class="btn-primary">スタート</button>
+        <button id="pauseBtn" class="btn-secondary" style="display:none;">一時停止</button>
         <button id="resetBtn" class="btn-ghost">↺</button>
         <button id="skipBtn" class="btn-ghost">⏭</button>
       </div>
@@ -593,58 +593,57 @@
   </div>
 
   <section class="video-section">
-    <h2>🎬 YouTube動画を読み込む</h2>
+    <h2>YouTube動画を読み込む</h2>
     <div class="url-input-row">
       <input id="urlInput" type="text" placeholder="YouTube URL or 動画IDをペースト（例: https://youtu.be/...）">
       <button id="loadBtn" class="btn-primary">読み込む</button>
-      <button id="favBtn" class="btn-secondary">⭐ お気に入り保存</button>
+      <button id="favBtn" class="btn-secondary">お気に入り保存</button>
     </div>
     <div id="placeholder" class="player-placeholder">
-      <span class="emoji">📺</span>
       上の欄にYouTube URLを貼って「読み込む」を押すと、上のタイマー背景に動画が表示されます。<br>
-      集中タイム中に再生 → 休憩タイムで自動一時停止 🍵
+      集中タイム中に再生 → 休憩タイムで自動一時停止
     </div>
   </section>
 
   <section class="favorites">
-    <h2>⭐ お気に入り動画</h2>
+    <h2>お気に入り動画</h2>
     <div id="favList" class="fav-list"></div>
   </section>
 
   <section class="settings" id="customPanel" style="display:none;">
-    <h2>⚙ カスタム設定</h2>
+    <h2>カスタム設定</h2>
     <div class="setting-row">
-      <label>🔥 集中（分）</label>
+      <label>集中（分）</label>
       <input id="focusMin" type="number" min="1" max="180" value="25">
     </div>
     <div class="setting-row">
-      <label>🍵 休憩（分）</label>
+      <label>休憩（分）</label>
       <input id="breakMin" type="number" min="1" max="60" value="5">
     </div>
     <div class="setting-row">
-      <label>🌴 長休憩・4回ごと（分）</label>
+      <label>長休憩・4回ごと（分）</label>
       <input id="longBreakMin" type="number" min="1" max="60" value="15">
     </div>
     <div class="setting-row">
-      <label>🔔 音声通知</label>
+      <label>音声通知</label>
       <input id="soundOn" type="checkbox" checked>
     </div>
   </section>
 </main>
 
 <section class="info-section">
-  <h2 class="info-h">📖 ポモドーロタイマーについて</h2>
+  <h2 class="info-h">ポモドーロタイマーについて</h2>
 
   <details class="info-card" open>
-    <summary>🍅 ポモドーロ・テクニックとは？</summary>
+    <summary>ポモドーロ・テクニックとは？</summary>
     <div class="info-body">
-      <p>1980年代後半にイタリアの起業家 <strong>フランチェスコ・シリロ氏</strong> が考案した時間管理術です。「25分の集中作業＋5分の休憩」を1セット（=1ポモドーロ）として繰り返すことで、人間の集中力を効率よく引き出します。「ポモドーロ」はイタリア語で「トマト🍅」のこと。シリロ氏が学生時代にトマト型のキッチンタイマーを使っていたことが名前の由来です。</p>
+      <p>1980年代後半にイタリアの起業家 <strong>フランチェスコ・シリロ氏</strong> が考案した時間管理術です。「25分の集中作業＋5分の休憩」を1セット（=1ポモドーロ）として繰り返すことで、人間の集中力を効率よく引き出します。「ポモドーロ」はイタリア語で「トマト」のこと。シリロ氏が学生時代にトマト型のキッチンタイマーを使っていたことが名前の由来です。</p>
       <p>現在では世界中の学生・エンジニア・クリエイター・経営者が活用しており、効率の良い学習法・仕事術として広く認められています。</p>
     </div>
   </details>
 
   <details class="info-card">
-    <summary>🚀 このタイマーを使うメリット</summary>
+    <summary>このタイマーを使うメリット</summary>
     <div class="info-body">
       <ul>
         <li><strong>好きなYouTube動画をBGMにできる</strong> — 作業用BGM・自然音・Lo-Fi・お気に入りのVTuber作業配信など、何でも流せます</li>
@@ -659,38 +658,38 @@
   </details>
 
   <details class="info-card">
-    <summary>📝 使い方ガイド</summary>
+    <summary>使い方ガイド</summary>
     <div class="info-body">
       <ol>
         <li><strong>YouTube動画のURLをコピー</strong> — 作業用BGMやお気に入り動画のURLをYouTubeから取得</li>
         <li><strong>「YouTube動画を読み込む」欄にペースト</strong> → 「読み込む」ボタンをクリック</li>
-        <li><strong>「⭐お気に入り保存」</strong> でリストに登録（次回ワンクリックで呼び出し可能）</li>
+        <li><strong>「お気に入り保存」</strong> でリストに登録（次回ワンクリックで呼び出し可能）</li>
         <li><strong>集中・休憩時間を ± ボタンで調整</strong>（標準は集中25分／休憩5分）</li>
-        <li><strong>「▶ スタート」を押すと動画再生＋タイマー開始</strong></li>
+        <li><strong>「スタート」を押すと動画再生＋タイマー開始</strong></li>
         <li>25分後に通知音が鳴り、休憩タイムへ自動切替（動画も自動で一時停止）</li>
         <li>4ポモドーロ完了で長めの休憩タイムが入ります</li>
-        <li><strong>👁ボタンでタイマーを一時非表示</strong> → 動画に集中したい時に便利</li>
+        <li><strong>「表示」ボタンでタイマーを一時非表示</strong> → 動画に集中したい時に便利</li>
       </ol>
     </div>
   </details>
 
   <details class="info-card">
-    <summary>🎯 こんな人におすすめ</summary>
+    <summary>こんな人におすすめ</summary>
     <div class="info-body">
       <ul>
-        <li>📚 <strong>受験生・資格勉強中の方</strong> — 集中と休憩のリズムで暗記効率アップ</li>
-        <li>💼 <strong>在宅ワーカー・フリーランス</strong> — ダラダラ防止に最適</li>
-        <li>👨‍💻 <strong>プログラマー・デザイナー</strong> — 深い集中（ディープワーク）の習慣化</li>
-        <li>📝 <strong>ライター・ブロガー</strong> — 締切に追われない執筆リズムを作る</li>
-        <li>🎨 <strong>クリエイター・YouTuber</strong> — 編集作業を分割して疲労を軽減</li>
-        <li>🎓 <strong>大学生・社会人学習者</strong> — オンライン授業・自習の集中維持</li>
-        <li>🌙 <strong>夜型作業の方</strong> — 癒しBGMで眠気と戦いながら作業</li>
+        <li><strong>受験生・資格勉強中の方</strong> — 集中と休憩のリズムで暗記効率アップ</li>
+        <li><strong>在宅ワーカー・フリーランス</strong> — ダラダラ防止に最適</li>
+        <li><strong>プログラマー・デザイナー</strong> — 深い集中（ディープワーク）の習慣化</li>
+        <li><strong>ライター・ブロガー</strong> — 締切に追われない執筆リズムを作る</li>
+        <li><strong>クリエイター・YouTuber</strong> — 編集作業を分割して疲労を軽減</li>
+        <li><strong>大学生・社会人学習者</strong> — オンライン授業・自習の集中維持</li>
+        <li><strong>夜型作業の方</strong> — 癒しBGMで眠気と戦いながら作業</li>
       </ul>
     </div>
   </details>
 
   <details class="info-card">
-    <summary>💡 集中力を最大化するコツ</summary>
+    <summary>集中力を最大化するコツ</summary>
     <div class="info-body">
       <ul>
         <li><strong>スマホは別の部屋に置く</strong> — 通知の誘惑が最大の敵です</li>
@@ -704,7 +703,7 @@
   </details>
 
   <details class="info-card">
-    <summary>❓ よくある質問（FAQ）</summary>
+    <summary>よくある質問（FAQ）</summary>
     <div class="info-body">
       <p><strong>Q. 完全無料ですか？</strong><br>
       A. はい、無料です。会員登録もインストールも不要で、ブラウザだけで使えます。</p>
@@ -722,7 +721,7 @@
   </details>
 
   <details class="info-card">
-    <summary>🔗 関連サイト</summary>
+    <summary>関連サイト</summary>
     <div class="info-body">
       <ul>
         <li><a href="https://mokumoku-time.kkpwebninja.com" target="_blank" rel="noopener">もくもくタイム</a> — シンプルなもくもく会向けタイマー</li>
@@ -826,11 +825,11 @@
   function saveFavs(f) { localStorage.setItem(FAV_KEY, JSON.stringify(f)); }
   function addFav(id, title) {
     const favs = loadFavs();
-    if (favs.some(f => f.id === id)) { showToast('既に保存済みだよ ⭐'); return; }
+    if (favs.some(f => f.id === id)) { showToast('既に保存済みです'); return; }
     favs.unshift({ id, title: title || `動画 ${id}`, ts: Date.now() });
     saveFavs(favs.slice(0, 24));
     renderFavs();
-    showToast('お気に入りに追加 ⭐');
+    showToast('お気に入りに追加');
   }
   function removeFav(id) {
     saveFavs(loadFavs().filter(f => f.id !== id));
@@ -840,7 +839,7 @@
     const list = $('favList');
     const favs = loadFavs();
     if (!favs.length) {
-      list.innerHTML = '<div class="empty-fav">まだお気に入りがありません。動画を読み込んで「⭐ お気に入り保存」を押してね 🍅</div>';
+      list.innerHTML = '<div class="empty-fav">まだお気に入りがありません。動画を読み込んで「お気に入り保存」を押してください</div>';
       return;
     }
     list.innerHTML = favs.map(f => `
@@ -867,7 +866,7 @@
   window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
 
   function loadVideo(id) {
-    if (!id) { showToast('URLが正しくないみたい 😢'); return; }
+    if (!id) { showToast('URLが正しくありません'); return; }
     STATE.currentVideoId = id;
     $('player-wrap').classList.add('active');
     $('stage').classList.add('has-video');
@@ -899,14 +898,14 @@
 
   $('loadBtn').addEventListener('click', () => {
     const id = parseVideoId($('urlInput').value);
-    if (!id) { showToast('URLが正しくないみたい 😢'); return; }
+    if (!id) { showToast('URLが正しくありません'); return; }
     loadVideo(id);
   });
   $('urlInput').addEventListener('keydown', e => {
     if (e.key === 'Enter') $('loadBtn').click();
   });
   $('favBtn').addEventListener('click', () => {
-    if (!STATE.currentVideoId) { showToast('先に動画を読み込んでね 🎬'); return; }
+    if (!STATE.currentVideoId) { showToast('先に動画を読み込んでください'); return; }
     let title = `動画 ${STATE.currentVideoId}`;
     try { title = STATE.player.getVideoData().title || title; } catch(e){}
     addFav(STATE.currentVideoId, title);
@@ -923,15 +922,15 @@
     STATE.remaining = getDuration(mode);
     const label = $('modeLabel');
     label.classList.remove('mode-focus','mode-break','mode-longbreak');
-    if (mode === 'focus') { label.classList.add('mode-focus'); label.textContent = '🔥 集中タイム'; }
-    else if (mode === 'break') { label.classList.add('mode-break'); label.textContent = '🍵 休憩タイム'; }
-    else { label.classList.add('mode-longbreak'); label.textContent = '🌴 長めの休憩'; }
+    if (mode === 'focus') { label.classList.add('mode-focus'); label.textContent = '集中タイム'; }
+    else if (mode === 'break') { label.classList.add('mode-break'); label.textContent = '休憩タイム'; }
+    else { label.classList.add('mode-longbreak'); label.textContent = '長めの休憩'; }
     updateDisplay();
-    document.title = `${fmt(STATE.remaining)} ${mode==='focus'?'🔥':'🍵'} KKPポモドーロ`;
+    document.title = `${fmt(STATE.remaining)} ポモドーロタイマー`;
   }
   function updateDisplay() {
     $('timeDisplay').textContent = fmt(STATE.remaining);
-    document.title = `${fmt(STATE.remaining)} ${STATE.mode==='focus'?'🔥':'🍵'} KKPポモドーロ`;
+    document.title = `${fmt(STATE.remaining)} ポモドーロタイマー`;
   }
   function tick() {
     STATE.remaining--;
@@ -973,13 +972,13 @@
       incrementStats();
       const next = (STATE.cycle % 4 === 0) ? 'longbreak' : 'break';
       setMode(next);
-      showToast('お疲れさま！休憩しよう 🍵');
+      showToast('お疲れさま、休憩しよう');
       if (STATE.player && STATE.player.pauseVideo) {
         try { STATE.player.pauseVideo(); } catch(e){}
       }
     } else {
       setMode('focus');
-      showToast('休憩おわり！次の集中いこう 🔥');
+      showToast('休憩おわり、次の集中いこう');
     }
     // 自動で次のフェーズを開始
     setTimeout(start, 1500);
@@ -1049,7 +1048,7 @@
   $('toggleOverlay').addEventListener('click', () => {
     const card = document.querySelector('.timer-card');
     card.classList.toggle('hidden');
-    $('toggleOverlay').textContent = card.classList.contains('hidden') ? '🍅' : '👁';
+    $('toggleOverlay').textContent = card.classList.contains('hidden') ? '隠' : '表示';
   });
 
   // URLパラメータから動画ID読み込み
