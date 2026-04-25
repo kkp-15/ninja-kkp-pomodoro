@@ -8,3 +8,4 @@
 wrangler.jsonc
 CNAME
 *.md
+node_modules
