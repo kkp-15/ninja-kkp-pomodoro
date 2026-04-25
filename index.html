@@ -397,45 +397,57 @@
     text-decoration-color: #1a3c6c;
   }
 
-  .preset-hint { color: var(--muted); font-size: 0.85rem; margin-bottom: 0.8rem; }
-  .preset-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 0.7rem;
-    margin-bottom: 1rem;
+  .time-picker {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: center;
+    margin: 0.6rem 0 0.8rem;
+    flex-wrap: wrap;
   }
-  .preset-btn {
+  .time-field {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
     background: #fff5e6;
-    border: 2px solid var(--border);
-    border-radius: 14px;
-    padding: 0.9rem 0.5rem;
-    cursor: pointer;
-    transition: transform 0.1s, box-shadow 0.2s, border-color 0.2s;
-    text-align: center;
-    box-shadow: none;
+    border-radius: 999px;
+    padding: 0.3rem 0.8rem;
   }
-  .preset-btn:hover {
-    transform: translateY(-2px);
-    border-color: var(--tomato);
-    box-shadow: 0 4px 12px rgba(255,107,107,0.2);
-  }
-  .preset-btn.active {
-    background: var(--tomato);
-    color: white;
-    border-color: var(--tomato-dark);
-  }
-  .preset-main { font-size: 1.4rem; font-weight: 900; color: var(--tomato-dark); }
-  .preset-btn.active .preset-main { color: white; }
-  .preset-sub { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
-  .preset-btn.active .preset-sub { color: rgba(255,255,255,0.9); }
-  .custom-details { margin-top: 0.5rem; }
-  .custom-details summary {
-    cursor: pointer;
-    color: var(--tomato-dark);
+  .tp-label {
+    font-size: 0.8rem;
+    color: var(--muted);
     font-weight: bold;
-    padding: 0.5rem 0;
-    font-size: 0.9rem;
+    margin-right: 0.2rem;
   }
+  .tp-btn {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--tomato-dark);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    padding: 0;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tp-btn:hover { background: var(--tomato); color: white; }
+  .tp-val {
+    font-size: 1rem;
+    font-weight: 900;
+    color: var(--text);
+    min-width: 2ch;
+    text-align: center;
+  }
+  .tp-unit { font-size: 0.75rem; color: var(--muted); }
+  .stage.has-video .time-picker { margin: 0.4rem 0 0.5rem; gap: 0.6rem; }
+  .stage.has-video .time-field { padding: 0.2rem 0.6rem; }
+  .stage.has-video .tp-btn { width: 22px; height: 22px; font-size: 0.85rem; }
+  .stage.has-video .tp-val { font-size: 0.85rem; }
 
   .toast {
     position: fixed;
@@ -469,11 +481,27 @@
       <span id="modeLabel" class="mode-label mode-focus">🔥 集中タイム</span>
       <div id="timeDisplay" class="time-display">25:00</div>
       <div class="cycle-info">完了ポモドーロ：<span id="cycleCount">0</span> 個</div>
+      <div class="time-picker">
+        <div class="time-field">
+          <span class="tp-label">集中</span>
+          <button class="tp-btn" data-target="focus" data-delta="-1">−</button>
+          <span class="tp-val" id="focusVal">25</span>
+          <button class="tp-btn" data-target="focus" data-delta="1">＋</button>
+          <span class="tp-unit">分</span>
+        </div>
+        <div class="time-field">
+          <span class="tp-label">休憩</span>
+          <button class="tp-btn" data-target="brk" data-delta="-1">−</button>
+          <span class="tp-val" id="brkVal">5</span>
+          <button class="tp-btn" data-target="brk" data-delta="1">＋</button>
+          <span class="tp-unit">分</span>
+        </div>
+      </div>
       <div class="controls">
         <button id="startBtn" class="btn-primary">▶ スタート</button>
         <button id="pauseBtn" class="btn-secondary" style="display:none;">⏸ 一時停止</button>
-        <button id="resetBtn" class="btn-ghost">↺ リセット</button>
-        <button id="skipBtn" class="btn-ghost">⏭ スキップ</button>
+        <button id="resetBtn" class="btn-ghost">↺</button>
+        <button id="skipBtn" class="btn-ghost">⏭</button>
       </div>
     </section>
   </div>
@@ -497,54 +525,24 @@
     <div id="favList" class="fav-list"></div>
   </section>
 
-  <section class="settings">
-    <h2>⏱ タイマーセット</h2>
-    <p class="preset-hint">よく使う組み合わせをワンクリックで選べます 👇</p>
-    <div class="preset-grid">
-      <button class="preset-btn" data-focus="25" data-brk="5" data-long="15">
-        <div class="preset-main">25 / 5</div>
-        <div class="preset-sub">🍅 標準ポモドーロ</div>
-      </button>
-      <button class="preset-btn" data-focus="50" data-brk="10" data-long="20">
-        <div class="preset-main">50 / 10</div>
-        <div class="preset-sub">🔥 ロングセッション</div>
-      </button>
-      <button class="preset-btn" data-focus="90" data-brk="20" data-long="30">
-        <div class="preset-main">90 / 20</div>
-        <div class="preset-sub">🚀 ウルトラディアン</div>
-      </button>
-      <button class="preset-btn" data-focus="15" data-brk="3" data-long="10">
-        <div class="preset-main">15 / 3</div>
-        <div class="preset-sub">⚡ ショート</div>
-      </button>
-      <button class="preset-btn" data-focus="45" data-brk="15" data-long="20">
-        <div class="preset-main">45 / 15</div>
-        <div class="preset-sub">📚 大学講義スタイル</div>
-      </button>
-      <button class="preset-btn" data-focus="60" data-brk="10" data-long="20">
-        <div class="preset-main">60 / 10</div>
-        <div class="preset-sub">💼 1時間集中</div>
-      </button>
+  <section class="settings" id="customPanel" style="display:none;">
+    <h2>⚙ カスタム設定</h2>
+    <div class="setting-row">
+      <label>🔥 集中（分）</label>
+      <input id="focusMin" type="number" min="1" max="180" value="25">
     </div>
-    <details class="custom-details">
-      <summary>カスタム設定</summary>
-      <div class="setting-row">
-        <label>🔥 集中（分）</label>
-        <input id="focusMin" type="number" min="1" max="180" value="25">
-      </div>
-      <div class="setting-row">
-        <label>🍵 休憩（分）</label>
-        <input id="breakMin" type="number" min="1" max="60" value="5">
-      </div>
-      <div class="setting-row">
-        <label>🌴 長休憩・4回ごと（分）</label>
-        <input id="longBreakMin" type="number" min="1" max="60" value="15">
-      </div>
-      <div class="setting-row">
-        <label>🔔 音声通知</label>
-        <input id="soundOn" type="checkbox" checked>
-      </div>
-    </details>
+    <div class="setting-row">
+      <label>🍵 休憩（分）</label>
+      <input id="breakMin" type="number" min="1" max="60" value="5">
+    </div>
+    <div class="setting-row">
+      <label>🌴 長休憩・4回ごと（分）</label>
+      <input id="longBreakMin" type="number" min="1" max="60" value="15">
+    </div>
+    <div class="setting-row">
+      <label>🔔 音声通知</label>
+      <input id="soundOn" type="checkbox" checked>
+    </div>
   </section>
 </main>
 
@@ -833,31 +831,33 @@
   setMode('focus');
   renderFavs();
 
-  // ====== Preset buttons ======
-  function applyPreset(focus, brk, long) {
-    $('focusMin').value = focus;
-    $('breakMin').value = brk;
-    $('longBreakMin').value = long;
-    saveSettings();
-    if (!STATE.running) resetTimer();
-    document.querySelectorAll('.preset-btn').forEach(b => {
-      b.classList.toggle('active',
-        +b.dataset.focus === focus && +b.dataset.brk === brk && +b.dataset.long === long);
-    });
-    showToast(`${focus}分集中 / ${brk}分休憩 にセット 🍅`);
+  // ====== Time picker (+/-) ======
+  function syncTimeDisplay() {
+    $('focusVal').textContent = +$('focusMin').value;
+    $('brkVal').textContent = +$('breakMin').value;
   }
-  document.querySelectorAll('.preset-btn').forEach(btn => {
+  function adjustTime(target, delta) {
+    if (target === 'focus') {
+      const cur = +$('focusMin').value;
+      const next = Math.max(1, Math.min(180, cur + delta));
+      $('focusMin').value = next;
+    } else {
+      const cur = +$('breakMin').value;
+      const next = Math.max(1, Math.min(60, cur + delta));
+      $('breakMin').value = next;
+      // 長休憩は自動で短休憩の3倍に
+      $('longBreakMin').value = Math.min(60, next * 3);
+    }
+    saveSettings();
+    syncTimeDisplay();
+    if (!STATE.running) resetTimer();
+  }
+  document.querySelectorAll('.tp-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      applyPreset(+btn.dataset.focus, +btn.dataset.brk, +btn.dataset.long);
+      adjustTime(btn.dataset.target, +btn.dataset.delta);
     });
   });
-  // 初期プリセットのアクティブ表示
-  (function highlightInitial(){
-    const f = +$('focusMin').value, b = +$('breakMin').value, l = +$('longBreakMin').value;
-    document.querySelectorAll('.preset-btn').forEach(btn => {
-      if (+btn.dataset.focus===f && +btn.dataset.brk===b && +btn.dataset.long===l) btn.classList.add('active');
-    });
-  })();
+  syncTimeDisplay();
 
   // URLパラメータから動画ID読み込み
   const urlParams = new URLSearchParams(window.location.search);
