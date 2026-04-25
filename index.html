@@ -397,6 +397,46 @@
     text-decoration-color: #1a3c6c;
   }
 
+  .preset-hint { color: var(--muted); font-size: 0.85rem; margin-bottom: 0.8rem; }
+  .preset-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.7rem;
+    margin-bottom: 1rem;
+  }
+  .preset-btn {
+    background: #fff5e6;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 0.9rem 0.5rem;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.2s, border-color 0.2s;
+    text-align: center;
+    box-shadow: none;
+  }
+  .preset-btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--tomato);
+    box-shadow: 0 4px 12px rgba(255,107,107,0.2);
+  }
+  .preset-btn.active {
+    background: var(--tomato);
+    color: white;
+    border-color: var(--tomato-dark);
+  }
+  .preset-main { font-size: 1.4rem; font-weight: 900; color: var(--tomato-dark); }
+  .preset-btn.active .preset-main { color: white; }
+  .preset-sub { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
+  .preset-btn.active .preset-sub { color: rgba(255,255,255,0.9); }
+  .custom-details { margin-top: 0.5rem; }
+  .custom-details summary {
+    cursor: pointer;
+    color: var(--tomato-dark);
+    font-weight: bold;
+    padding: 0.5rem 0;
+    font-size: 0.9rem;
+  }
+
   .toast {
     position: fixed;
     bottom: 20px;
@@ -457,42 +497,54 @@
     <div id="favList" class="fav-list"></div>
   </section>
 
-  <section class="stats">
-    <h2>📊 今日の記録</h2>
-    <div class="stats-grid">
-      <div class="stat-box">
-        <div id="todayCount" class="stat-num">0</div>
-        <div class="stat-label">今日の🍅</div>
-      </div>
-      <div class="stat-box">
-        <div id="totalCount" class="stat-num">0</div>
-        <div class="stat-label">累計🍅</div>
-      </div>
-      <div class="stat-box">
-        <div id="todayMin" class="stat-num">0</div>
-        <div class="stat-label">集中分数</div>
-      </div>
-    </div>
-  </section>
-
   <section class="settings">
-    <h2>⚙️ タイマー設定（分）</h2>
-    <div class="setting-row">
-      <label>🔥 集中タイム</label>
-      <input id="focusMin" type="number" min="1" max="120" value="25">
+    <h2>⏱ タイマーセット</h2>
+    <p class="preset-hint">よく使う組み合わせをワンクリックで選べます 👇</p>
+    <div class="preset-grid">
+      <button class="preset-btn" data-focus="25" data-brk="5" data-long="15">
+        <div class="preset-main">25 / 5</div>
+        <div class="preset-sub">🍅 標準ポモドーロ</div>
+      </button>
+      <button class="preset-btn" data-focus="50" data-brk="10" data-long="20">
+        <div class="preset-main">50 / 10</div>
+        <div class="preset-sub">🔥 ロングセッション</div>
+      </button>
+      <button class="preset-btn" data-focus="90" data-brk="20" data-long="30">
+        <div class="preset-main">90 / 20</div>
+        <div class="preset-sub">🚀 ウルトラディアン</div>
+      </button>
+      <button class="preset-btn" data-focus="15" data-brk="3" data-long="10">
+        <div class="preset-main">15 / 3</div>
+        <div class="preset-sub">⚡ ショート</div>
+      </button>
+      <button class="preset-btn" data-focus="45" data-brk="15" data-long="20">
+        <div class="preset-main">45 / 15</div>
+        <div class="preset-sub">📚 大学講義スタイル</div>
+      </button>
+      <button class="preset-btn" data-focus="60" data-brk="10" data-long="20">
+        <div class="preset-main">60 / 10</div>
+        <div class="preset-sub">💼 1時間集中</div>
+      </button>
     </div>
-    <div class="setting-row">
-      <label>🍵 短い休憩</label>
-      <input id="breakMin" type="number" min="1" max="60" value="5">
-    </div>
-    <div class="setting-row">
-      <label>🌴 長い休憩（4回ごと）</label>
-      <input id="longBreakMin" type="number" min="1" max="60" value="15">
-    </div>
-    <div class="setting-row">
-      <label>🔔 音声通知</label>
-      <input id="soundOn" type="checkbox" checked>
-    </div>
+    <details class="custom-details">
+      <summary>カスタム設定</summary>
+      <div class="setting-row">
+        <label>🔥 集中（分）</label>
+        <input id="focusMin" type="number" min="1" max="180" value="25">
+      </div>
+      <div class="setting-row">
+        <label>🍵 休憩（分）</label>
+        <input id="breakMin" type="number" min="1" max="60" value="5">
+      </div>
+      <div class="setting-row">
+        <label>🌴 長休憩・4回ごと（分）</label>
+        <input id="longBreakMin" type="number" min="1" max="60" value="15">
+      </div>
+      <div class="setting-row">
+        <label>🔔 音声通知</label>
+        <input id="soundOn" type="checkbox" checked>
+      </div>
+    </details>
   </section>
 </main>
 
@@ -583,21 +635,7 @@
     return s;
   }
   function saveStats(s) { localStorage.setItem(STATS_KEY, JSON.stringify(s)); }
-  function incrementStats() {
-    const s = loadStats();
-    const k = todayKey();
-    s.total = (s.total || 0) + 1;
-    s.days[k] = (s.days[k] || 0) + 1;
-    saveStats(s);
-    renderStats();
-  }
-  function renderStats() {
-    const s = loadStats();
-    const today = s.days[todayKey()] || 0;
-    $('todayCount').textContent = today;
-    $('totalCount').textContent = s.total || 0;
-    $('todayMin').textContent = today * (+$('focusMin').value || 25);
-  }
+  function incrementStats() {}
 
   // ====== Favorites ======
   function loadFavs() { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); }
@@ -794,7 +832,32 @@
   loadSettings();
   setMode('focus');
   renderFavs();
-  renderStats();
+
+  // ====== Preset buttons ======
+  function applyPreset(focus, brk, long) {
+    $('focusMin').value = focus;
+    $('breakMin').value = brk;
+    $('longBreakMin').value = long;
+    saveSettings();
+    if (!STATE.running) resetTimer();
+    document.querySelectorAll('.preset-btn').forEach(b => {
+      b.classList.toggle('active',
+        +b.dataset.focus === focus && +b.dataset.brk === brk && +b.dataset.long === long);
+    });
+    showToast(`${focus}分集中 / ${brk}分休憩 にセット 🍅`);
+  }
+  document.querySelectorAll('.preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      applyPreset(+btn.dataset.focus, +btn.dataset.brk, +btn.dataset.long);
+    });
+  });
+  // 初期プリセットのアクティブ表示
+  (function highlightInitial(){
+    const f = +$('focusMin').value, b = +$('breakMin').value, l = +$('longBreakMin').value;
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      if (+btn.dataset.focus===f && +btn.dataset.brk===b && +btn.dataset.long===l) btn.classList.add('active');
+    });
+  })();
 
   // URLパラメータから動画ID読み込み
   const urlParams = new URLSearchParams(window.location.search);
