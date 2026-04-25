@@ -104,23 +104,52 @@
   }
   .stage.has-video .timer-card {
     position: absolute;
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 12px;
+    right: 12px;
+    left: auto;
+    transform: none;
     background: rgba(255, 255, 255, 0.55);
     backdrop-filter: blur(14px) saturate(140%);
     -webkit-backdrop-filter: blur(14px) saturate(140%);
     border: 1px solid rgba(255,255,255,0.6);
-    padding: 1rem 1.5rem 1.2rem;
+    padding: 0.7rem 1rem 0.9rem;
     box-shadow: 0 8px 24px rgba(0,0,0,0.25);
     z-index: 5;
-    width: min(92%, 520px);
+    width: min(46%, 280px);
+    max-width: 280px;
   }
-  .stage.has-video .time-field {
-    background: rgba(255, 245, 230, 0.65);
+  .stage.has-video .timer-card.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(20px);
   }
-  .stage.has-video .tp-btn {
-    background: rgba(255, 255, 255, 0.85);
+  .stage.has-video .timer-card { transition: opacity 0.25s, transform 0.25s; }
+  .stage.has-video .time-field { background: rgba(255, 245, 230, 0.65); }
+  .stage.has-video .tp-btn { background: rgba(255, 255, 255, 0.85); }
+  .toggle-overlay-btn {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 6;
+    background: rgba(0,0,0,0.55);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: none;
+    padding: 0;
+    line-height: 1;
+    display: none;
+  }
+  .stage.has-video .toggle-overlay-btn { display: block; }
+  .toggle-overlay-btn:hover { background: rgba(0,0,0,0.75); }
+  @media (max-width: 600px) {
+    .stage.has-video .timer-card { width: min(60%, 220px); padding: 0.5rem 0.7rem 0.7rem; }
+    .stage.has-video .time-display { font-size: 1.8rem; }
+    .stage.has-video .controls button { padding: 0.35rem 0.7rem; font-size: 0.75rem; }
   }
   .stage.has-video .time-display {
     font-size: clamp(2.8rem, 8vw, 4.5rem);
@@ -484,6 +513,7 @@
 <main>
   <div id="stage" class="stage">
     <div id="player-wrap"><div id="player"></div></div>
+    <button id="toggleOverlay" class="toggle-overlay-btn" title="タイマー表示/非表示">👁</button>
     <section class="timer-card">
       <span id="modeLabel" class="mode-label mode-focus">🔥 集中タイム</span>
       <div id="timeDisplay" class="time-display">25:00</div>
@@ -865,6 +895,13 @@
     });
   });
   syncTimeDisplay();
+
+  // ====== Overlay toggle ======
+  $('toggleOverlay').addEventListener('click', () => {
+    const card = document.querySelector('.timer-card');
+    card.classList.toggle('hidden');
+    $('toggleOverlay').textContent = card.classList.contains('hidden') ? '🍅' : '👁';
+  });
 
   // URLパラメータから動画ID読み込み
   const urlParams = new URLSearchParams(window.location.search);
