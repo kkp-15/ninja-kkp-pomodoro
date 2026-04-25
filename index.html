@@ -880,7 +880,14 @@
     } else if (ytReady) {
       STATE.player = new YT.Player('player', {
         videoId: id,
-        playerVars: { autoplay: 1, rel: 0 },
+        playerVars: { autoplay: 1, rel: 0, loop: 1, playlist: id },
+        events: {
+          onStateChange: (e) => {
+            if (e.data === YT.PlayerState.ENDED) {
+              try { e.target.seekTo(0); e.target.playVideo(); } catch(_){}
+            }
+          }
+        },
       });
     } else {
       // APIまだなら待つ
@@ -889,7 +896,14 @@
           clearInterval(wait);
           STATE.player = new YT.Player('player', {
             videoId: id,
-            playerVars: { autoplay: 1, rel: 0 },
+            playerVars: { autoplay: 1, rel: 0, loop: 1, playlist: id },
+        events: {
+          onStateChange: (e) => {
+            if (e.data === YT.PlayerState.ENDED) {
+              try { e.target.seekTo(0); e.target.playVideo(); } catch(_){}
+            }
+          }
+        },
           });
         }
       }, 100);
