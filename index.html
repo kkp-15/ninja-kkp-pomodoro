@@ -1198,12 +1198,11 @@
   }
   function getShareText() {
     if (STATE.currentVideoId) {
-      const ytUrl = `https://youtu.be/${STATE.currentVideoId}`;
       const title = getVideoTitle();
       if (title) {
-        return `おすすめ作業BGMはこれ：「${title}」\n${ytUrl}\n\n動画の上にタイマー重ねてポモドーロ集中中。みなさんのおすすめは？\n#ポモドーロタイマー`;
+        return `おすすめ作業BGMはこれ：「${title}」\nリンクから同じ動画つきでポモドーロが始められます。\n\nみなさんのおすすめは？\n#ポモドーロタイマー`;
       }
-      return `この動画を流しながらポモドーロ集中中。\n${ytUrl}\n\n動画の上にタイマー重ねるやつ。みなさんのおすすめ作業BGMは？\n#ポモドーロタイマー`;
+      return `今のおすすめ作業BGMでポモドーロ集中中。\nリンクから同じ動画つきでポモドーロが始められます。\n\nみなさんのおすすめは？\n#ポモドーロタイマー`;
     }
     return `YouTube動画をBGMにポモドーロできるタイマー。動画の上にタイマー重ねて作業が捗る。\n\nみなさんのおすすめ作業BGMは？\n#ポモドーロタイマー`;
   }
