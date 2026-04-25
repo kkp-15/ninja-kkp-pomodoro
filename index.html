@@ -146,11 +146,6 @@
   }
   .stage.has-video .toggle-overlay-btn { display: block; }
   .toggle-overlay-btn:hover { background: rgba(0,0,0,0.75); }
-  @media (max-width: 600px) {
-    .stage.has-video .timer-card { width: min(60%, 220px); padding: 0.5rem 0.7rem 0.7rem; }
-    .stage.has-video .time-display { font-size: 1.8rem; }
-    .stage.has-video .controls button { padding: 0.35rem 0.7rem; font-size: 0.75rem; }
-  }
   .stage.has-video .time-display {
     font-size: clamp(2.8rem, 8vw, 4.5rem);
     margin: 0.2rem 0;
@@ -160,9 +155,55 @@
   .stage.has-video .controls { margin-top: 0.5rem; gap: 0.4rem; }
   .stage.has-video .controls button { padding: 0.5rem 1rem; font-size: 0.9rem; }
   .stage.has-video #player-wrap { aspect-ratio: 16/9; }
+
+  /* スマホ：動画とタイマーを縦並びにして両方をしっかり大きく表示 */
   @media (max-width: 600px) {
-    .stage.has-video .timer-card { top: 8px; padding: 0.7rem 1rem; }
-    .stage.has-video .time-display { font-size: 2.4rem; }
+    .stage { overflow: visible; border-radius: 0; }
+    .stage #player-wrap { border-radius: 16px; }
+    .stage.has-video {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .stage.has-video .timer-card {
+      position: static;
+      width: 100%;
+      max-width: none;
+      top: auto; right: auto; left: auto;
+      background: var(--card);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: 3px solid var(--border);
+      padding: 1.2rem 1rem;
+      box-shadow: 0 10px 30px rgba(255,107,107,0.15);
+      transform: none !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      z-index: auto;
+    }
+    .stage.has-video .toggle-overlay-btn { display: none; }
+    .stage.has-video .time-field { background: #fff5e6; }
+    .stage.has-video .tp-btn { background: white; }
+    .stage.has-video .mode-label {
+      font-size: 0.95rem;
+      padding: 0.3rem 1rem;
+      margin-bottom: 0.6rem;
+    }
+    .stage.has-video .time-display {
+      font-size: clamp(3.2rem, 14vw, 5rem);
+      margin: 0.3rem 0;
+    }
+    .stage.has-video .cycle-info { font-size: 0.9rem; margin-bottom: 0.8rem; }
+    .stage.has-video .time-picker { gap: 0.8rem; margin: 0.6rem 0 0.8rem; }
+    .stage.has-video .time-field { padding: 0.35rem 0.9rem; }
+    .stage.has-video .tp-btn { width: 30px; height: 30px; font-size: 1rem; }
+    .stage.has-video .tp-val { font-size: 1.05rem; }
+    .stage.has-video .controls { gap: 0.6rem; margin-top: 0.8rem; }
+    .stage.has-video .controls button {
+      padding: 0.7rem 1.2rem;
+      font-size: 0.95rem;
+      min-height: 44px;
+    }
   }
   .mode-label {
     display: inline-block;
