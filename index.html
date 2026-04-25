@@ -905,6 +905,8 @@
         if (u.pathname === '/watch') return u.searchParams.get('v');
         if (u.pathname.startsWith('/embed/')) return u.pathname.split('/')[2];
         if (u.pathname.startsWith('/shorts/')) return u.pathname.split('/')[2];
+        if (u.pathname.startsWith('/live/')) return u.pathname.split('/')[2];
+        if (u.pathname.startsWith('/v/')) return u.pathname.split('/')[2];
       }
     } catch(e){}
     return null;
