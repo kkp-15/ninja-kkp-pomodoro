@@ -620,8 +620,14 @@
   .share-btn:active { transform: translateY(2px); }
   .share-btn:hover { opacity: 0.88; }
   .share-x { background: #000; box-shadow: 0 4px 0 #333; }
+  .share-threads { background: #000; box-shadow: 0 4px 0 #333; }
   .share-line { background: #06c755; box-shadow: 0 4px 0 #04a045; }
   .share-fb { background: #1877f2; box-shadow: 0 4px 0 #145cc0; }
+  .share-hatena { background: #00A4DE; box-shadow: 0 4px 0 #0086b8; }
+  .share-instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    box-shadow: 0 4px 0 rgba(0,0,0,0.25);
+  }
   .share-copy { background: var(--sun); color: var(--text); box-shadow: 0 4px 0 #e6b800; }
 
   .toast {
@@ -705,8 +711,11 @@
     <p class="share-hint" id="shareHint">このタイマーをシェア。動画を読み込み中の場合は、その動画つきのURLでシェアできます。</p>
     <div class="share-buttons">
       <button id="shareX" class="share-btn share-x" type="button">𝕏 でポスト</button>
+      <button id="shareThreads" class="share-btn share-threads" type="button">Threads</button>
       <button id="shareLine" class="share-btn share-line" type="button">LINEで送る</button>
       <button id="shareFb" class="share-btn share-fb" type="button">Facebook</button>
+      <button id="shareHatena" class="share-btn share-hatena" type="button">はてブ</button>
+      <button id="shareInstagram" class="share-btn share-instagram" type="button">Instagram</button>
       <button id="shareCopy" class="share-btn share-copy" type="button">URLをコピー</button>
     </div>
   </section>
@@ -1191,11 +1200,11 @@
     if (STATE.currentVideoId) {
       const title = getVideoTitle();
       if (title) {
-        return `「${title}」を流しながらポモドーロ。\n動画の上にタイマーを重ねて集中タイム中 #ポモドーロタイマー`;
+        return `「${title}」を流しながらポモドーロ集中タイム中。動画の上にタイマー重ねるやつ。\n\nあなたのおすすめ作業BGMは？\n#ポモドーロタイマー`;
       }
-      return `YouTube動画を流しながらポモドーロ。\n動画の上にタイマーを重ねて集中タイム中 #ポモドーロタイマー`;
+      return `YouTube動画を流しながらポモドーロ集中タイム中。動画の上にタイマー重ねるやつ。\n\nあなたのおすすめ作業BGMは？\n#ポモドーロタイマー`;
     }
-    return `YouTube動画をBGMにポモドーロできるタイマー。\n動画の上にタイマー重ねて作業が捗る #ポモドーロタイマー`;
+    return `YouTube動画をBGMにポモドーロできるタイマー。動画の上にタイマー重ねて作業が捗る。\n\nあなたのおすすめ作業BGMは？\n#ポモドーロタイマー`;
   }
   function updateShareHint() {
     const hint = $('shareHint');
@@ -1211,24 +1220,43 @@
       hint.textContent = 'このタイマーをシェア。動画を読み込み中の場合は、その動画つきのURLでシェアできます。';
     }
   }
-  function openShare(type) {
+  async function openShare(type) {
     const url = getShareUrl();
     const text = getShareText();
     let target;
     if (type === 'x') {
       target = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+    } else if (type === 'threads') {
+      target = `https://www.threads.net/intent/post?text=${encodeURIComponent(text + '\n' + url)}`;
     } else if (type === 'line') {
       target = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
     } else if (type === 'fb') {
       target = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+    } else if (type === 'hatena') {
+      target = `https://b.hatena.ne.jp/entry/${url}`;
+    } else if (type === 'instagram') {
+      if (navigator.share) {
+        try {
+          await navigator.share({ title: 'ポモドーロタイマー', text, url });
+          return;
+        } catch(_) { /* ユーザーがキャンセルした場合などは下にフォールバック */ }
+      }
+      try {
+        await navigator.clipboard.writeText(url);
+        showToast('URLをコピーしました。Instagramのストーリーやプロフィールに貼り付けてください');
+      } catch(_) { showToast('コピーに失敗しました'); }
+      return;
     } else {
       return;
     }
     window.open(target, '_blank', 'noopener,noreferrer,width=600,height=600');
   }
   $('shareX').addEventListener('click', () => openShare('x'));
+  $('shareThreads').addEventListener('click', () => openShare('threads'));
   $('shareLine').addEventListener('click', () => openShare('line'));
   $('shareFb').addEventListener('click', () => openShare('fb'));
+  $('shareHatena').addEventListener('click', () => openShare('hatena'));
+  $('shareInstagram').addEventListener('click', () => openShare('instagram'));
   $('shareCopy').addEventListener('click', async () => {
     const url = getShareUrl();
     try {
