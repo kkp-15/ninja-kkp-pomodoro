@@ -1019,12 +1019,14 @@
       setTimeout(updateShareHint, 3500);
     }
 
-    if (STATE.player && STATE.player.loadVideoById) {
+    if (STATE.player && STATE.player.cueVideoById) {
+      STATE.player.cueVideoById(id);
+    } else if (STATE.player && STATE.player.loadVideoById) {
       STATE.player.loadVideoById(id);
     } else if (ytReady) {
       STATE.player = new YT.Player('player', {
         videoId: id,
-        playerVars: { autoplay: 1, rel: 0, loop: 1, playlist: id },
+        playerVars: { autoplay: 0, rel: 0, loop: 1, playlist: id },
         events: {
           onStateChange: (e) => {
             if (e.data === YT.PlayerState.ENDED) {
@@ -1040,14 +1042,14 @@
           clearInterval(wait);
           STATE.player = new YT.Player('player', {
             videoId: id,
-            playerVars: { autoplay: 1, rel: 0, loop: 1, playlist: id },
-        events: {
-          onStateChange: (e) => {
-            if (e.data === YT.PlayerState.ENDED) {
-              try { e.target.seekTo(0); e.target.playVideo(); } catch(_){}
-            }
-          }
-        },
+            playerVars: { autoplay: 0, rel: 0, loop: 1, playlist: id },
+            events: {
+              onStateChange: (e) => {
+                if (e.data === YT.PlayerState.ENDED) {
+                  try { e.target.seekTo(0); e.target.playVideo(); } catch(_){}
+                }
+              }
+            },
           });
         }
       }, 100);
