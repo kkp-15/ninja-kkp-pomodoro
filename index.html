@@ -834,6 +834,22 @@
   function removeFav(id) {
     saveFavs(loadFavs().filter(f => f.id !== id));
     renderFavs();
+    // 再生中の動画ならプレイヤーもクリア
+    if (STATE.currentVideoId === id) {
+      try { STATE.player && STATE.player.stopVideo && STATE.player.stopVideo(); } catch(_){}
+      try { STATE.player && STATE.player.destroy && STATE.player.destroy(); } catch(_){}
+      STATE.player = null;
+      STATE.currentVideoId = null;
+      const wrap = $('player-wrap');
+      wrap.classList.remove('active');
+      wrap.innerHTML = '<div id="player"></div>';
+      $('stage').classList.remove('has-video');
+      $('placeholder').style.display = '';
+      $('urlInput').value = '';
+      const url = new URL(window.location);
+      url.searchParams.delete('v');
+      history.replaceState(null, '', url);
+    }
   }
   function renderFavs() {
     const list = $('favList');
