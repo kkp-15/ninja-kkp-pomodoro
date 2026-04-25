@@ -3,24 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KKPポモドーロタイマー｜好きなYouTube動画で集中作業 🍅</title>
+<title>ポモドーロタイマー｜好きなYouTube動画で集中作業 🍅</title>
 <meta name="description" content="お気に入りのYouTube動画やBGMを流しながらポモドーロ（25分集中＋5分休憩）ができる無料Webタイマー。URLを貼るだけで即スタート、お気に入り保存・統計機能つき。">
 <meta name="theme-color" content="#ff6b6b">
 <link rel="canonical" href="https://pomodoro.kkpwebninja.com/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🍅%3C/text%3E%3C/svg%3E">
 
-<meta property="og:title" content="KKPポモドーロタイマー｜好きなYouTube動画で集中作業 🍅">
+<meta property="og:title" content="ポモドーロタイマー｜好きなYouTube動画で集中作業 🍅">
 <meta property="og:description" content="お気に入りのYouTube動画を流しながらポモドーロ。URLを貼るだけで即スタート。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://pomodoro.kkpwebninja.com/">
-<meta property="og:site_name" content="KKPポモドーロタイマー">
+<meta property="og:site_name" content="ポモドーロタイマー">
 <meta name="twitter:card" content="summary_large_image">
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "KKPポモドーロタイマー",
+  "name": "ポモドーロタイマー",
   "url": "https://pomodoro.kkpwebninja.com/",
   "description": "好きなYouTube動画やBGMを流しながらポモドーロができる無料Webタイマー",
   "applicationCategory": "ProductivityApplication",
@@ -485,6 +485,55 @@
   .stage.has-video .tp-btn { width: 22px; height: 22px; font-size: 0.85rem; }
   .stage.has-video .tp-val { font-size: 0.85rem; }
 
+  .info-section {
+    max-width: 880px;
+    margin: 1.5rem auto 0;
+    padding: 0 1rem;
+  }
+  .info-h {
+    text-align: center;
+    color: var(--tomato-dark);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .info-card {
+    background: var(--card);
+    border-radius: 16px;
+    margin-bottom: 0.7rem;
+    border: 2px solid var(--border);
+    overflow: hidden;
+  }
+  .info-card summary {
+    cursor: pointer;
+    padding: 1rem 1.2rem;
+    font-weight: bold;
+    color: var(--tomato-dark);
+    list-style: none;
+    position: relative;
+    user-select: none;
+  }
+  .info-card summary::-webkit-details-marker { display: none; }
+  .info-card summary::after {
+    content: '＋';
+    position: absolute;
+    right: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--tomato);
+    font-weight: 900;
+  }
+  .info-card[open] summary::after { content: '−'; }
+  .info-card[open] summary { border-bottom: 1px solid var(--border); }
+  .info-body {
+    padding: 1rem 1.2rem 1.2rem;
+    line-height: 1.8;
+    font-size: 0.92rem;
+  }
+  .info-body p { margin-bottom: 0.7rem; }
+  .info-body ul, .info-body ol { padding-left: 1.4rem; margin: 0.4rem 0; }
+  .info-body li { margin-bottom: 0.4rem; }
+  .info-body a { color: var(--tomato-dark); }
+
   .toast {
     position: fixed;
     bottom: 20px;
@@ -506,7 +555,7 @@
 <body>
 
 <header>
-  <h1>🍅 KKPポモドーロタイマー</h1>
+  <h1>🍅 ポモドーロタイマー</h1>
   <p>好きなYouTube動画を流しながら集中作業 ✨</p>
 </header>
 
@@ -582,6 +631,106 @@
     </div>
   </section>
 </main>
+
+<section class="info-section">
+  <h2 class="info-h">📖 ポモドーロタイマーについて</h2>
+
+  <details class="info-card" open>
+    <summary>🍅 ポモドーロ・テクニックとは？</summary>
+    <div class="info-body">
+      <p>1980年代後半にイタリアの起業家 <strong>フランチェスコ・シリロ氏</strong> が考案した時間管理術です。「25分の集中作業＋5分の休憩」を1セット（=1ポモドーロ）として繰り返すことで、人間の集中力を効率よく引き出します。「ポモドーロ」はイタリア語で「トマト🍅」のこと。シリロ氏が学生時代にトマト型のキッチンタイマーを使っていたことが名前の由来です。</p>
+      <p>現在では世界中の学生・エンジニア・クリエイター・経営者が活用しており、効率の良い学習法・仕事術として広く認められています。</p>
+    </div>
+  </details>
+
+  <details class="info-card">
+    <summary>🚀 このタイマーを使うメリット</summary>
+    <div class="info-body">
+      <ul>
+        <li><strong>好きなYouTube動画をBGMにできる</strong> — 作業用BGM・自然音・Lo-Fi・お気に入りのVTuber作業配信など、何でも流せます</li>
+        <li><strong>集中タイムは再生・休憩タイムは自動で一時停止</strong> — メリハリを自動で作ってくれるので、ダラダラ視聴を防げます</li>
+        <li><strong>お気に入り動画を保存</strong> — よく使う動画はサムネ付きで保存、ワンクリックで再開</li>
+        <li><strong>動画の上にタイマーをオーバーレイ表示</strong> — 動画を見ながら残り時間が一目で分かる</li>
+        <li><strong>±ボタンで時間を直感調整</strong> — 集中/休憩の長さを1分単位で簡単に変更</li>
+        <li><strong>完全無料・登録不要・インストール不要</strong> — ブラウザを開いてすぐ使えます</li>
+        <li><strong>スマホ・PC両対応</strong> — レスポンシブデザインでどのデバイスでも快適</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="info-card">
+    <summary>📝 使い方ガイド</summary>
+    <div class="info-body">
+      <ol>
+        <li><strong>YouTube動画のURLをコピー</strong> — 作業用BGMやお気に入り動画のURLをYouTubeから取得</li>
+        <li><strong>「YouTube動画を読み込む」欄にペースト</strong> → 「読み込む」ボタンをクリック</li>
+        <li><strong>「⭐お気に入り保存」</strong> でリストに登録（次回ワンクリックで呼び出し可能）</li>
+        <li><strong>集中・休憩時間を ± ボタンで調整</strong>（標準は集中25分／休憩5分）</li>
+        <li><strong>「▶ スタート」を押すと動画再生＋タイマー開始</strong></li>
+        <li>25分後に通知音が鳴り、休憩タイムへ自動切替（動画も自動で一時停止）</li>
+        <li>4ポモドーロ完了で長めの休憩タイムが入ります</li>
+        <li><strong>👁ボタンでタイマーを一時非表示</strong> → 動画に集中したい時に便利</li>
+      </ol>
+    </div>
+  </details>
+
+  <details class="info-card">
+    <summary>🎯 こんな人におすすめ</summary>
+    <div class="info-body">
+      <ul>
+        <li>📚 <strong>受験生・資格勉強中の方</strong> — 集中と休憩のリズムで暗記効率アップ</li>
+        <li>💼 <strong>在宅ワーカー・フリーランス</strong> — ダラダラ防止に最適</li>
+        <li>👨‍💻 <strong>プログラマー・デザイナー</strong> — 深い集中（ディープワーク）の習慣化</li>
+        <li>📝 <strong>ライター・ブロガー</strong> — 締切に追われない執筆リズムを作る</li>
+        <li>🎨 <strong>クリエイター・YouTuber</strong> — 編集作業を分割して疲労を軽減</li>
+        <li>🎓 <strong>大学生・社会人学習者</strong> — オンライン授業・自習の集中維持</li>
+        <li>🌙 <strong>夜型作業の方</strong> — 癒しBGMで眠気と戦いながら作業</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="info-card">
+    <summary>💡 集中力を最大化するコツ</summary>
+    <div class="info-body">
+      <ul>
+        <li><strong>スマホは別の部屋に置く</strong> — 通知の誘惑が最大の敵です</li>
+        <li><strong>1ポモドーロ = 1タスク</strong> — マルチタスクは集中を分散させます</li>
+        <li><strong>休憩中は画面から目を離す</strong> — 立ち上がる・水を飲む・窓の外を見る</li>
+        <li><strong>BGMは歌詞なしを選ぶ</strong> — 思考系作業では歌詞が邪魔になることも</li>
+        <li><strong>4セット後は15〜20分の長休憩</strong> — 脳を完全にリセット</li>
+        <li><strong>「あと1分」で止めない</strong> — タイマーの音が鳴ったら必ず休憩へ</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="info-card">
+    <summary>❓ よくある質問（FAQ）</summary>
+    <div class="info-body">
+      <p><strong>Q. 完全無料ですか？</strong><br>
+      A. はい、無料です。会員登録もインストールも不要で、ブラウザだけで使えます。</p>
+      <p><strong>Q. データはどこに保存されますか？</strong><br>
+      A. お気に入り動画やタイマー設定は、お使いのブラウザのローカルストレージに保存されます。サーバーには送信されません。</p>
+      <p><strong>Q. スマホでも使えますか？</strong><br>
+      A. iOS Safari、Android Chrome 等の主要モバイルブラウザに対応しています。</p>
+      <p><strong>Q. 動画が再生できません</strong><br>
+      A. YouTube側で埋め込み禁止になっている動画があります。別の動画でお試しください。</p>
+      <p><strong>Q. 集中時間を変更できますか？</strong><br>
+      A. はい、±ボタンで1分単位で1〜180分の範囲で調整可能です。</p>
+      <p><strong>Q. プレイリストも再生できますか？</strong><br>
+      A. 単一動画のみ対応しています（プレイリストは順次対応予定）。</p>
+    </div>
+  </details>
+
+  <details class="info-card">
+    <summary>🔗 関連サイト</summary>
+    <div class="info-body">
+      <ul>
+        <li><a href="https://mokumoku-time.kkpwebninja.com" target="_blank" rel="noopener">もくもくタイム</a> — シンプルなもくもく会向けタイマー</li>
+        <li><a href="https://kkpwebninja.com" target="_blank" rel="noopener">web忍者の砦</a> — 便利なWebアプリ集</li>
+      </ul>
+    </div>
+  </details>
+</section>
 
 <footer>
   <p>&copy; 2026 <a href="https://kkpwebninja.com">web忍者の砦</a></p>
