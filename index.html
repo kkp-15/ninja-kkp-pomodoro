@@ -541,6 +541,48 @@
   .info-body li { margin-bottom: 0.4rem; }
   .info-body a { color: var(--tomato-dark); }
 
+  .share-section {
+    background: var(--card);
+    border-radius: 24px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 3px solid var(--border);
+  }
+  .share-section h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+    color: var(--tomato-dark);
+  }
+  .share-hint {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 0.9rem;
+    line-height: 1.5;
+  }
+  .share-hint strong { color: var(--tomato-dark); font-weight: bold; }
+  .share-buttons {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .share-btn {
+    font-family: inherit;
+    border: none;
+    border-radius: 999px;
+    padding: 0.65rem 1.1rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    transition: transform 0.1s, opacity 0.2s;
+  }
+  .share-btn:active { transform: translateY(2px); }
+  .share-btn:hover { opacity: 0.88; }
+  .share-x { background: #000; box-shadow: 0 4px 0 #333; }
+  .share-line { background: #06c755; box-shadow: 0 4px 0 #04a045; }
+  .share-fb { background: #1877f2; box-shadow: 0 4px 0 #145cc0; }
+  .share-copy { background: var(--sun); color: var(--text); box-shadow: 0 4px 0 #e6b800; }
+
   .toast {
     position: fixed;
     bottom: 20px;
@@ -615,6 +657,17 @@
   <section class="favorites">
     <h2>お気に入り動画</h2>
     <div id="favList" class="fav-list"></div>
+  </section>
+
+  <section class="share-section">
+    <h2>シェアする</h2>
+    <p class="share-hint" id="shareHint">このタイマーをシェア🍅 動画を読み込み中の場合は、その動画つきのURLでシェアできます。</p>
+    <div class="share-buttons">
+      <button id="shareX" class="share-btn share-x" type="button">𝕏 でポスト</button>
+      <button id="shareLine" class="share-btn share-line" type="button">LINEで送る</button>
+      <button id="shareFb" class="share-btn share-fb" type="button">Facebook</button>
+      <button id="shareCopy" class="share-btn share-copy" type="button">URLをコピー</button>
+    </div>
   </section>
 
   <section class="settings" id="customPanel" style="display:none;">
@@ -877,6 +930,7 @@
       const url = new URL(window.location);
       url.searchParams.delete('v');
       history.replaceState(null, '', url);
+      if (typeof updateShareHint === 'function') updateShareHint();
     }
   }
   function renderFavs() {
@@ -918,6 +972,11 @@
     const url = new URL(window.location);
     url.searchParams.set('v', id);
     history.replaceState(null, '', url);
+    if (typeof updateShareHint === 'function') {
+      updateShareHint();
+      setTimeout(updateShareHint, 1500);
+      setTimeout(updateShareHint, 3500);
+    }
 
     if (STATE.player && STATE.player.loadVideoById) {
       STATE.player.loadVideoById(id);
@@ -1069,10 +1128,83 @@
   $('resetBtn').addEventListener('click', resetTimer);
   $('skipBtn').addEventListener('click', skip);
 
+  // ====== Share ======
+  function getShareUrl() {
+    const base = window.location.origin + window.location.pathname;
+    return STATE.currentVideoId ? `${base}?v=${STATE.currentVideoId}` : base;
+  }
+  function getVideoTitle() {
+    if (STATE.currentVideoId && STATE.player && STATE.player.getVideoData) {
+      try {
+        const t = STATE.player.getVideoData().title;
+        if (t) return t.length > 30 ? t.slice(0, 30) + '…' : t;
+      } catch(_){}
+    }
+    return '';
+  }
+  function getShareText() {
+    if (STATE.currentVideoId) {
+      const title = getVideoTitle();
+      if (title) {
+        return `🍅「${title}」を流しながらポモドーロ☕\n動画の上にタイマーを重ねて集中タイム中 #ポモドーロタイマー`;
+      }
+      return `🍅 YouTube動画を流しながらポモドーロ☕\n動画の上にタイマーを重ねて集中タイム中 #ポモドーロタイマー`;
+    }
+    return `🍅 YouTube動画をBGMにポモドーロできるタイマー☕\n動画の上にタイマー重ねて作業が捗る #ポモドーロタイマー`;
+  }
+  function updateShareHint() {
+    const hint = $('shareHint');
+    if (!hint) return;
+    if (STATE.currentVideoId) {
+      const title = getVideoTitle();
+      if (title) {
+        hint.innerHTML = `<strong>「${escapeHtml(title)}」</strong>つきのURLでシェアできます🍅 受け取った人もそのまま同じ動画でポモドーロが始められます。`;
+      } else {
+        hint.innerHTML = '<strong>再生中の動画つき</strong>のURLでシェアできます🍅 受け取った人もそのまま同じ動画でポモドーロが始められます。';
+      }
+    } else {
+      hint.textContent = 'このタイマーをシェア🍅 動画を読み込み中の場合は、その動画つきのURLでシェアできます。';
+    }
+  }
+  function openShare(type) {
+    const url = getShareUrl();
+    const text = getShareText();
+    let target;
+    if (type === 'x') {
+      target = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+    } else if (type === 'line') {
+      target = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+    } else if (type === 'fb') {
+      target = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+    } else {
+      return;
+    }
+    window.open(target, '_blank', 'noopener,noreferrer,width=600,height=600');
+  }
+  $('shareX').addEventListener('click', () => openShare('x'));
+  $('shareLine').addEventListener('click', () => openShare('line'));
+  $('shareFb').addEventListener('click', () => openShare('fb'));
+  $('shareCopy').addEventListener('click', async () => {
+    const url = getShareUrl();
+    try {
+      await navigator.clipboard.writeText(url);
+      showToast('URLをコピーしました');
+    } catch(_) {
+      const ta = document.createElement('textarea');
+      ta.value = url;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); showToast('URLをコピーしました'); }
+      catch(_) { showToast('コピーに失敗しました'); }
+      document.body.removeChild(ta);
+    }
+  });
+
   // ====== Init ======
   loadSettings();
   setMode('focus');
   renderFavs();
+  updateShareHint();
 
   // ====== Time picker (+/-) ======
   function syncTimeDisplay() {
