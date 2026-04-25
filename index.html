@@ -702,7 +702,7 @@
 
   <section class="share-section">
     <h2>シェアする</h2>
-    <p class="share-hint" id="shareHint">このタイマーをシェア🍅 動画を読み込み中の場合は、その動画つきのURLでシェアできます。</p>
+    <p class="share-hint" id="shareHint">このタイマーをシェア。動画を読み込み中の場合は、その動画つきのURLでシェアできます。</p>
     <div class="share-buttons">
       <button id="shareX" class="share-btn share-x" type="button">𝕏 でポスト</button>
       <button id="shareLine" class="share-btn share-line" type="button">LINEで送る</button>
@@ -1189,11 +1189,11 @@
     if (STATE.currentVideoId) {
       const title = getVideoTitle();
       if (title) {
-        return `「${title}」を流しながらポモドーロ☕\n動画の上にタイマーを重ねて集中タイム中 #ポモドーロタイマー`;
+        return `「${title}」を流しながらポモドーロ。\n動画の上にタイマーを重ねて集中タイム中 #ポモドーロタイマー`;
       }
-      return `YouTube動画を流しながらポモドーロ☕\n動画の上にタイマーを重ねて集中タイム中 #ポモドーロタイマー`;
+      return `YouTube動画を流しながらポモドーロ。\n動画の上にタイマーを重ねて集中タイム中 #ポモドーロタイマー`;
     }
-    return `YouTube動画をBGMにポモドーロできるタイマー☕\n動画の上にタイマー重ねて作業が捗る #ポモドーロタイマー`;
+    return `YouTube動画をBGMにポモドーロできるタイマー。\n動画の上にタイマー重ねて作業が捗る #ポモドーロタイマー`;
   }
   function updateShareHint() {
     const hint = $('shareHint');
@@ -1201,12 +1201,12 @@
     if (STATE.currentVideoId) {
       const title = getVideoTitle();
       if (title) {
-        hint.innerHTML = `<strong>「${escapeHtml(title)}」</strong>つきのURLでシェアできます🍅 受け取った人もそのまま同じ動画でポモドーロが始められます。`;
+        hint.innerHTML = `<strong>「${escapeHtml(title)}」</strong>つきのURLでシェアできます。受け取った人もそのまま同じ動画でポモドーロが始められます。`;
       } else {
-        hint.innerHTML = '<strong>再生中の動画つき</strong>のURLでシェアできます🍅 受け取った人もそのまま同じ動画でポモドーロが始められます。';
+        hint.innerHTML = '<strong>再生中の動画つき</strong>のURLでシェアできます。受け取った人もそのまま同じ動画でポモドーロが始められます。';
       }
     } else {
-      hint.textContent = 'このタイマーをシェア🍅 動画を読み込み中の場合は、その動画つきのURLでシェアできます。';
+      hint.textContent = 'このタイマーをシェア。動画を読み込み中の場合は、その動画つきのURLでシェアできます。';
     }
   }
   function openShare(type) {
