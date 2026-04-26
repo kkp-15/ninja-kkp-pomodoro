@@ -1015,6 +1015,54 @@
   function onYouTubeIframeAPIReady() { ytReady = true; }
   window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
 
+  function clearCurrentPlayer() {
+    try { STATE.player && STATE.player.destroy && STATE.player.destroy(); } catch(_){}
+    STATE.player = null;
+    STATE.currentVideoId = null;
+    const wrap = $('player-wrap');
+    wrap.classList.remove('active');
+    wrap.innerHTML = '<div id="player"></div>';
+    $('stage').classList.remove('has-video');
+    $('placeholder').style.display = '';
+    $('urlInput').value = '';
+    const url = new URL(window.location);
+    url.searchParams.delete('v');
+    history.replaceState(null, '', url);
+    if (typeof updateShareHint === 'function') updateShareHint();
+  }
+
+  function handlePlayerError(code) {
+    let msg;
+    if (code === 100) {
+      msg = '動画が見つかりません。非公開・削除された可能性があります';
+    } else if (code === 101 || code === 150) {
+      msg = 'この動画は埋め込み再生に対応していません';
+    } else if (code === 2) {
+      msg = '動画IDが正しくありません';
+    } else if (code === 5) {
+      msg = '動画の再生に失敗しました';
+    } else {
+      msg = '動画を読み込めませんでした';
+    }
+    showToast(msg);
+    clearCurrentPlayer();
+  }
+
+  function buildPlayerOptions(id) {
+    return {
+      videoId: id,
+      playerVars: { autoplay: 0, rel: 0, loop: 1, playlist: id },
+      events: {
+        onStateChange: (e) => {
+          if (e.data === YT.PlayerState.ENDED) {
+            try { e.target.seekTo(0); e.target.playVideo(); } catch(_){}
+          }
+        },
+        onError: (e) => handlePlayerError(e.data)
+      }
+    };
+  }
+
   function loadVideo(id) {
     if (!id) { showToast('URLが正しくありません'); return; }
     STATE.currentVideoId = id;
@@ -1035,33 +1083,13 @@
     } else if (STATE.player && STATE.player.loadVideoById) {
       STATE.player.loadVideoById(id);
     } else if (ytReady) {
-      STATE.player = new YT.Player('player', {
-        videoId: id,
-        playerVars: { autoplay: 0, rel: 0, loop: 1, playlist: id },
-        events: {
-          onStateChange: (e) => {
-            if (e.data === YT.PlayerState.ENDED) {
-              try { e.target.seekTo(0); e.target.playVideo(); } catch(_){}
-            }
-          }
-        },
-      });
+      STATE.player = new YT.Player('player', buildPlayerOptions(id));
     } else {
       // APIまだなら待つ
       const wait = setInterval(() => {
         if (ytReady) {
           clearInterval(wait);
-          STATE.player = new YT.Player('player', {
-            videoId: id,
-            playerVars: { autoplay: 0, rel: 0, loop: 1, playlist: id },
-            events: {
-              onStateChange: (e) => {
-                if (e.data === YT.PlayerState.ENDED) {
-                  try { e.target.seekTo(0); e.target.playVideo(); } catch(_){}
-                }
-              }
-            },
-          });
+          STATE.player = new YT.Player('player', buildPlayerOptions(id));
         }
       }, 100);
     }
