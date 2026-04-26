@@ -285,10 +285,14 @@
     gap: 0.5rem;
     flex-wrap: wrap;
   }
-  .url-input-row input {
+  .url-input-wrap {
+    position: relative;
     flex: 1;
     min-width: 200px;
-    padding: 0.7rem 1rem;
+  }
+  .url-input-row input {
+    width: 100%;
+    padding: 0.7rem 2.4rem 0.7rem 1rem;
     border: 2px solid var(--border);
     border-radius: 12px;
     font-size: 0.95rem;
@@ -298,6 +302,28 @@
     outline: none;
     border-color: var(--tomato);
   }
+  .url-clear-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,0.4);
+    color: white;
+    font-size: 0.75rem;
+    cursor: pointer;
+    display: none;
+    padding: 0;
+    line-height: 1;
+    box-shadow: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .url-clear-btn:hover { background: rgba(0,0,0,0.65); }
+  .url-input-wrap.has-value .url-clear-btn { display: flex; }
 
   #player-wrap {
     position: relative;
@@ -691,7 +717,10 @@
   <section class="video-section">
     <h2>YouTube動画を読み込む</h2>
     <div class="url-input-row">
-      <input id="urlInput" type="text" placeholder="YouTube URL or 動画IDをペースト（例: https://youtu.be/...）">
+      <div class="url-input-wrap" id="urlInputWrap">
+        <input id="urlInput" type="text" placeholder="YouTube URLをペースト → 自動で読み込み">
+        <button id="urlClearBtn" class="url-clear-btn" type="button" aria-label="クリア">✕</button>
+      </div>
       <button id="loadBtn" class="btn-primary">読み込む</button>
       <button id="favBtn" class="btn-secondary">お気に入り保存</button>
     </div>
@@ -1029,6 +1058,7 @@
     url.searchParams.delete('v');
     history.replaceState(null, '', url);
     if (typeof updateShareHint === 'function') updateShareHint();
+    if (typeof syncClearBtn === 'function') syncClearBtn();
   }
 
   function handlePlayerError(code) {
@@ -1102,6 +1132,38 @@
   });
   $('urlInput').addEventListener('keydown', e => {
     if (e.key === 'Enter') $('loadBtn').click();
+  });
+  // 入力に応じてクリアボタンの表示切替
+  function syncClearBtn() {
+    $('urlInputWrap').classList.toggle('has-value', !!$('urlInput').value);
+  }
+  $('urlInput').addEventListener('input', syncClearBtn);
+  // クリア（×）ボタン
+  $('urlClearBtn').addEventListener('click', () => {
+    if (STATE.currentVideoId) {
+      clearCurrentPlayer();
+    } else {
+      $('urlInput').value = '';
+    }
+    syncClearBtn();
+    $('urlInput').focus();
+  });
+  // 貼り付けで自動読み込み（既存テキストを置き換え）
+  $('urlInput').addEventListener('paste', (e) => {
+    const data = e.clipboardData || window.clipboardData;
+    if (!data) return;
+    const pasted = data.getData('text');
+    if (!pasted) return;
+    e.preventDefault();
+    const trimmed = pasted.trim();
+    $('urlInput').value = trimmed;
+    syncClearBtn();
+    const id = parseVideoId(trimmed);
+    if (id) {
+      loadVideo(id);
+    } else {
+      showToast('URLが正しくありません');
+    }
   });
   $('favBtn').addEventListener('click', () => {
     if (!STATE.currentVideoId) { showToast('先に動画を読み込んでください'); return; }
@@ -1347,6 +1409,7 @@
   const vParam = urlParams.get('v');
   if (vParam) {
     $('urlInput').value = vParam;
+    syncClearBtn();
     setTimeout(() => loadVideo(vParam), 500);
   }
 </script>
