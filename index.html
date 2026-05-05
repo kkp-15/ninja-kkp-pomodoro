@@ -623,41 +623,56 @@
     margin-bottom: 0.4rem;
     color: var(--tomato-dark);
   }
-  .share-hint {
-    font-size: 0.85rem;
-    color: var(--muted);
-    margin-bottom: 0.9rem;
-    line-height: 1.5;
+  .share-intro-main {
+    text-align: center;
+    margin: 6px 0 14px;
   }
-  .share-hint strong { color: var(--tomato-dark); font-weight: bold; }
+  .share-intro-main strong {
+    display: block;
+    font-size: 16px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .share-intro-main span {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
   .share-buttons {
     display: flex;
-    gap: 0.6rem;
+    gap: 8px;
     flex-wrap: wrap;
+    justify-content: center;
   }
   .share-btn {
-    font-family: inherit;
+    flex: 1 1 calc(33% - 6px);
+    min-width: 90px;
+    padding: 12px 8px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+    text-align: center;
+    color: #fff;
     border: none;
-    border-radius: 999px;
-    padding: 0.65rem 1.1rem;
-    font-size: 0.9rem;
-    font-weight: bold;
     cursor: pointer;
-    color: white;
-    transition: transform 0.1s, opacity 0.2s;
+    transition: transform 0.15s, opacity 0.15s, box-shadow 0.15s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-family: inherit;
   }
-  .share-btn:active { transform: translateY(2px); }
-  .share-btn:hover { opacity: 0.88; }
-  .share-x { background: #000; box-shadow: 0 4px 0 #333; }
-  .share-threads { background: #000; box-shadow: 0 4px 0 #333; }
-  .share-line { background: #06c755; box-shadow: 0 4px 0 #04a045; }
-  .share-fb { background: #1877f2; box-shadow: 0 4px 0 #145cc0; }
-  .share-hatena { background: #00A4DE; box-shadow: 0 4px 0 #0086b8; }
-  .share-instagram {
-    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-    box-shadow: 0 4px 0 rgba(0,0,0,0.25);
+  .share-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.18); }
+  .share-btn:active { transform: translateY(1px); }
+  .share-x { background: #000; }
+  .share-threads { background: #000; border: 1px solid #555; }
+  .share-line { background: #06C755; }
+  .share-fb { background: #1877F2; }
+  .share-hatena { background: #00A4DE; }
+  .share-instagram { background: linear-gradient(135deg, #405DE6 0%, #833AB4 25%, #C13584 50%, #E1306C 75%, #FD1D1D 100%); }
+  .share-copy { background: #555; }
+  .share-copy.copied { background: #1a5c2e; }
+  @media (max-width: 480px) {
+    .share-btn { flex: 1 1 calc(50% - 4px); }
   }
-  .share-copy { background: var(--sun); color: var(--text); box-shadow: 0 4px 0 #e6b800; }
 
   .toast {
     position: fixed;
@@ -746,15 +761,18 @@
 
   <section class="share-section">
     <h2>シェアする</h2>
-    <p class="share-hint" id="shareHint">このタイマーをシェア。動画を読み込み中の場合は、その動画つきのURLでシェアできます。</p>
+    <div class="share-intro-main">
+      <strong>このページをシェアする</strong>
+      <span id="shareHint">集中タイマーをワンタップで共有。動画を読み込み中ならその動画つきURLでシェアできます。</span>
+    </div>
     <div class="share-buttons">
-      <button id="shareX" class="share-btn share-x" type="button">𝕏 でポスト</button>
-      <button id="shareThreads" class="share-btn share-threads" type="button">Threads</button>
-      <button id="shareLine" class="share-btn share-line" type="button">LINEで送る</button>
+      <button id="shareX" class="share-btn share-x" type="button">𝕏</button>
+      <button id="shareThreads" class="share-btn share-threads" type="button">@ Threads</button>
+      <button id="shareLine" class="share-btn share-line" type="button">LINE</button>
       <button id="shareFb" class="share-btn share-fb" type="button">Facebook</button>
       <button id="shareHatena" class="share-btn share-hatena" type="button">はてブ</button>
-      <button id="shareInstagram" class="share-btn share-instagram" type="button">Instagram</button>
-      <button id="shareCopy" class="share-btn share-copy" type="button">URLをコピー</button>
+      <button id="shareInstagram" class="share-btn share-instagram" type="button">📷 Instagram</button>
+      <button id="shareCopy" class="share-btn share-copy" type="button">URLコピー</button>
     </div>
   </section>
 
