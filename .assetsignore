@@ -11,3 +11,10 @@ CNAME
 node_modules
 src
 src/**
+package.json
+package-lock.json
+CLAUDE.md
+CLAUDE.local.md
+AGENTS.md
+.claude
+.gitignore

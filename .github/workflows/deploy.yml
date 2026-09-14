@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Remove non-public files
+        # 作業ファイルは配信しない（.assetsignore だけに頼らない）。wrangler.jsonc と .assetsignore は Workers の deploy が読むので残す
+        run: rm -rf CLAUDE.md CLAUDE.local.md AGENTS.md .claude .github .gitignore
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:
