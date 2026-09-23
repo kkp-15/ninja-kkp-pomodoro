@@ -698,6 +698,13 @@
 .kkp-ad-label{font-size:11px;color:#999;letter-spacing:.08em;margin:0 0 6px;line-height:1}
 .kkp-ad ins.adsbygoogle{display:block;width:300px;height:250px;margin:0 auto}
 @media(min-width:768px){.kkp-ad{min-height:318px}.kkp-ad ins.adsbygoogle{width:336px;height:280px}}
+
+/* 見た目の調整（2026-09-24・AIっぽさを消す）: 影・グラデーション・大きな角丸・英字の飾り見出しをやめる（測定から生成し、機能に関わる部品は手で除外）。元のルールは上に残し上書き。 */
+section.timer-card, section.video-section, #placeholder, section.favorites, section.share-section, details.info-card { box-shadow: none; border-radius: 8px; }
+#modeLabel, div.time-field, #toast { border-radius: 6px; }
+#startBtn, #resetBtn, #skipBtn, #loadBtn, #favBtn { box-shadow: none; border-radius: 6px; }
+#shareX, #shareThreads, #shareLine, #shareFb, #shareHatena, #shareCopy { box-shadow: none; }
+#shareInstagram { box-shadow: none; background: rgb(64, 93, 230); }
 </style>
 
   <!-- WEBNINJA_UNIFIED_FAVICON -->
