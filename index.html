@@ -844,8 +844,8 @@ header p{color:var(--k-text-2)}
       <button id="favBtn" class="btn-secondary">お気に入り保存</button>
     </div>
     <div id="placeholder" class="player-placeholder">
-      上の欄にYouTube URLを貼って「読み込む」を押すと、上のタイマー背景に動画が表示されます。<br>
-      集中タイム中に再生 → 休憩タイムで自動一時停止
+      URLを貼ると、タイマーの後ろに動画が出ます。<br>
+      集中中は再生、休憩中は止まります
     </div>
   </section>
 
@@ -860,7 +860,7 @@ header p{color:var(--k-text-2)}
     <h2>シェアする</h2>
     <div class="share-intro-main">
       <strong>このページをシェアする</strong>
-      <span id="shareHint">集中タイマーをワンタップで共有。動画を読み込み中ならその動画つきURLでシェアできます。</span>
+      <span id="shareHint">動画を読み込み中なら、その動画つきで送れます。</span>
     </div>
     <div class="share-buttons">
       <button id="shareX" class="share-btn share-x" type="button">𝕏</button>
@@ -1151,7 +1151,7 @@ header p{color:var(--k-text-2)}
     const list = $('favList');
     const favs = loadFavs();
     if (!favs.length) {
-      list.innerHTML = '<div class="empty-fav">まだお気に入りがありません。動画を読み込んで「お気に入り保存」を押してください</div>';
+      list.innerHTML = '<div class="empty-fav">動画を読み込んで「お気に入り保存」を押すと、ここに並びます</div>';
       return;
     }
     list.innerHTML = favs.map(f => `
@@ -1435,12 +1435,12 @@ header p{color:var(--k-text-2)}
     if (STATE.currentVideoId) {
       const title = getVideoTitle();
       if (title) {
-        hint.innerHTML = `<strong>「${escapeHtml(title)}」</strong>つきのURLでシェアできます。受け取った人もそのまま同じ動画でポモドーロが始められます。`;
+        hint.innerHTML = `<strong>「${escapeHtml(title)}」</strong>つきで送れます。相手も同じ動画で始められます。`;
       } else {
-        hint.innerHTML = '<strong>再生中の動画つき</strong>のURLでシェアできます。受け取った人もそのまま同じ動画でポモドーロが始められます。';
+        hint.innerHTML = '<strong>再生中の動画つき</strong>で送れます。相手も同じ動画で始められます。';
       }
     } else {
-      hint.textContent = 'このタイマーをシェア。動画を読み込み中の場合は、その動画つきのURLでシェアできます。';
+      hint.textContent = '動画を読み込み中なら、その動画つきで送れます。';
     }
   }
   async function openShare(type) {
