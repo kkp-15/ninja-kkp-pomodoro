@@ -669,12 +669,6 @@
   }
   .share-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.18); }
   .share-btn:active { transform: translateY(1px); }
-  .share-x { background: #000; }
-  .share-threads { background: #000; border: 1px solid #555; }
-  .share-line { background: #06C755; }
-  .share-fb { background: #1877F2; }
-  .share-hatena { background: #00A4DE; }
-  .share-instagram { background: linear-gradient(135deg, #405DE6 0%, #833AB4 25%, #C13584 50%, #E1306C 75%, #FD1D1D 100%); }
   .share-copy { background: #555; }
   .share-copy.copied { background: #1a5c2e; }
   @media (max-width: 480px) {
@@ -710,8 +704,7 @@
 section.timer-card, section.video-section, #placeholder, section.favorites, section.share-section, details.info-card { box-shadow: none; border-radius: 8px; }
 #modeLabel, div.time-field, #toast { border-radius: 6px; }
 #startBtn, #resetBtn, #skipBtn, #loadBtn, #favBtn { box-shadow: none; border-radius: 6px; }
-#shareX, #shareThreads, #shareLine, #shareFb, #shareHatena, #shareCopy { box-shadow: none; }
-#shareInstagram { box-shadow: none; background: rgb(64, 93, 230); }
+#shareCopy { box-shadow: none; }
 .break-pic{display:block;width:140px;height:auto;margin:0 auto .8rem}
 /* ===== 2026-10-19 共通部品 D4（ストリート和忍者）に見た目をそろえる（道具なので控えめに） =====
    残り時間が主役。集中／休憩／長い休憩の色（mode-label）・シェアボタンの各社の色・動画の上に重ねる表示・
@@ -769,7 +762,6 @@ header p{color:var(--k-text-2)}
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="ポモドーロタイマ">
-  <link rel="stylesheet" href="https://kkpwebninja.com/shared/fortress-share.css">
 <!-- kkp-rel-d4:start -->
 <style id="kkp-rel-d4">
 /* あわせて使えるアプリ（統一仕様の欄）を D4 に: 和紙の面・筆の見出し・墨の字＋オレンジの下線＋道しるべ。入れ物なので影なし（kit: 影は押せるものだけ）。中身とリンクは触らない（インライン style に勝つため !important） */
@@ -784,9 +776,6 @@ header p{color:var(--k-text-2)}
 @media screen and (max-width:712px){.kkp-rel{max-width:calc(100vw - 24px)!important;margin-left:auto!important;margin-right:auto!important}}
 /* 読みやすさ 2026-10-21（字14px以上・明暗差4.5:1以上） */
 .mode-focus{color:var(--k-sumi)}
-.share-line{background:#0b873e}
-.share-fb{background:#1070ed}
-.share-hatena{background:#077da7}
 /* /読みやすさ */
 /* 2026-10-21 遊ぶ画面・結果画面の読みやすさ（実際に遊んで測った分） */
 .mode-break,.mode-longbreak{color:var(--k-sumi)}
@@ -863,12 +852,6 @@ header p{color:var(--k-text-2)}
       <span id="shareHint">動画を読み込み中なら、その動画つきで送れます。</span>
     </div>
     <div class="share-buttons">
-      <button id="shareX" class="share-btn share-x" type="button">𝕏</button>
-      <button id="shareThreads" class="share-btn share-threads" type="button">@ Threads</button>
-      <button id="shareLine" class="share-btn share-line" type="button">LINE</button>
-      <button id="shareFb" class="share-btn share-fb" type="button">Facebook</button>
-      <button id="shareHatena" class="share-btn share-hatena" type="button">はてブ</button>
-      <button id="shareInstagram" class="share-btn share-instagram" type="button">📷 Instagram</button>
       <button id="shareCopy" class="share-btn share-copy" type="button">URLコピー</button>
     </div>
   </section>
@@ -1419,16 +1402,6 @@ header p{color:var(--k-text-2)}
     }
     return '';
   }
-  function getShareText() {
-    if (STATE.currentVideoId) {
-      const title = getVideoTitle();
-      if (title) {
-        return `おすすめ作業BGMはこれ：「${title}」\nリンクから同じ動画つきでポモドーロが始められます。\n\nみなさんのおすすめは？\n#ポモドーロタイマー`;
-      }
-      return `今のおすすめ作業BGMでポモドーロ集中中。\nリンクから同じ動画つきでポモドーロが始められます。\n\nみなさんのおすすめは？\n#ポモドーロタイマー`;
-    }
-    return `YouTube動画をBGMにポモドーロできるタイマー。動画の上にタイマー重ねて作業が捗る。\n\nみなさんのおすすめ作業BGMは？\n#ポモドーロタイマー`;
-  }
   function updateShareHint() {
     const hint = $('shareHint');
     if (!hint) return;
@@ -1443,43 +1416,6 @@ header p{color:var(--k-text-2)}
       hint.textContent = '動画を読み込み中なら、その動画つきで送れます。';
     }
   }
-  async function openShare(type) {
-    const url = getShareUrl();
-    const text = getShareText();
-    let target;
-    if (type === 'x') {
-      target = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-    } else if (type === 'threads') {
-      target = `https://www.threads.net/intent/post?text=${encodeURIComponent(text + '\n' + url)}`;
-    } else if (type === 'line') {
-      target = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
-    } else if (type === 'fb') {
-      target = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-    } else if (type === 'hatena') {
-      target = `https://b.hatena.ne.jp/entry/${url}`;
-    } else if (type === 'instagram') {
-      if (navigator.share) {
-        try {
-          await navigator.share({ title: 'ポモドーロタイマー', text, url });
-          return;
-        } catch(_) { /* ユーザーがキャンセルした場合などは下にフォールバック */ }
-      }
-      try {
-        await navigator.clipboard.writeText(url);
-        showToast('URLをコピーしました。Instagramのストーリーやプロフィールに貼り付けてください');
-      } catch(_) { showToast('コピーに失敗しました'); }
-      return;
-    } else {
-      return;
-    }
-    window.open(target, '_blank', 'noopener,noreferrer,width=600,height=600');
-  }
-  $('shareX').addEventListener('click', () => openShare('x'));
-  $('shareThreads').addEventListener('click', () => openShare('threads'));
-  $('shareLine').addEventListener('click', () => openShare('line'));
-  $('shareFb').addEventListener('click', () => openShare('fb'));
-  $('shareHatena').addEventListener('click', () => openShare('hatena'));
-  $('shareInstagram').addEventListener('click', () => openShare('instagram'));
   $('shareCopy').addEventListener('click', async () => {
     const url = getShareUrl();
     try {
@@ -1547,7 +1483,6 @@ header p{color:var(--k-text-2)}
   }
 </script>
 
-<script src="https://kkpwebninja.com/shared/fortress-share.js" defer></script>
 
 <!-- ホーム画面に追加（kit の k-install。閉じた人には出さない＝元のキーのまま） -->
 <div class="k-install" data-k-key="ninja_kkp_pomodoro_install_dismissed" role="dialog" aria-label="ホーム画面に追加" hidden>
