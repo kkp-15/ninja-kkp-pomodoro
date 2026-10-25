@@ -752,6 +752,9 @@ header p{color:var(--k-text-2)}
 .info-card[open] summary{border-bottom:0}
 .info-body{padding:0 2px 14px}
 .k-page main p,.k-page .share-section{letter-spacing:normal}
+/* 2026-10-25 集中・休憩の −／＋（見た目28px）の押せる範囲を広げる。見た目と並びはそのまま */
+.tp-btn{position:relative;z-index:1}
+.tp-btn::after{content:'';position:absolute;inset:-8px}
 </style>
 
   <!-- WEBNINJA_UNIFIED_FAVICON -->
