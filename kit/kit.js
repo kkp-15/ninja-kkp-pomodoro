@@ -418,7 +418,9 @@
           var box = stage.querySelector('.k-view-idle');
           if (box) {
             box.hidden = !on;
-            if (on && title != null) { var t = box.querySelector('b,.k-view-idle-t'); if (t && t.textContent !== title) { t.textContent = title; K.fitText(t, { min: 42 }); } }
+            // 題字は HTML に最初から同じ文字で入っていることが多く、「文字が変わったときだけ」縮めると一度も縮まらず「…」で切れた（2026-10-30 ito 1280x720）。
+            // 待ち画面に入るたびに縮め直す。字のデータが後から届いて幅が変わるので、少し遅れてもう一度
+            if (on) { var t = box.querySelector('b,.k-view-idle-t'); if (t) { if (title != null && t.textContent !== title) t.textContent = title; K.fitText(t, { min: 42 }); clearTimeout(idleT); idleT = setTimeout(function () { if (!box.hidden) K.fitText(t, { min: 42 }); }, 600); } }
           }
         }
       };
