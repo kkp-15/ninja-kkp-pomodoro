@@ -752,6 +752,20 @@ header p{color:var(--k-text-2)}
 .info-card[open] summary{border-bottom:0}
 .info-body{padding:0 2px 14px}
 .k-page main p,.k-page .share-section{letter-spacing:normal}
+/* 本の紹介（Amazonアソシエイト・2026-11-04） */
+.bk{margin-top:26px}
+.bk>h2{margin:0;padding-bottom:4px;border-bottom:2px solid var(--k-sumi);font-size:18px;font-weight:800}
+.bk-pr{margin:8px 0 2px;font-size:12px;line-height:1.6;color:var(--k-text-2)}
+.bk-pr span{display:inline-block;margin-right:6px;padding:0 5px;border:1.5px solid var(--k-text-2);border-radius:3px;font-weight:800}
+.bk-list{margin:0;padding:0;list-style:none}
+.bk-list li{border-bottom:1px solid var(--k-line-soft)}
+.bk-list a{display:flex;flex-direction:column;justify-content:center;min-height:52px;padding:8px 26px 8px 0;position:relative;text-decoration:none;color:var(--k-sumi)}
+.bk-list b{font-size:15px;font-weight:800;line-height:1.45}
+.bk-list span{font-size:13px;line-height:1.5;color:var(--k-text-2)}
+.bk-list em{font-style:normal;font-weight:800;color:var(--k-sumi)}
+.bk-list a::after{content:"→";position:absolute;right:4px;top:50%;transform:translateY(-50%);color:var(--k-orange)}
+.bk-ku{margin:8px 0 0;font-size:13px;line-height:1.7;color:var(--k-text-2)}
+.bk-ku a{font-weight:800;color:var(--k-sumi)}
 /* 2026-10-25 集中・休憩の −／＋（見た目28px）の押せる範囲を広げる。見た目と並びはそのまま */
 .tp-btn{position:relative;z-index:1}
 .tp-btn::after{content:'';position:absolute;inset:-8px}
@@ -989,6 +1003,17 @@ header p{color:var(--k-text-2)}
     </div>
   </details>
 </section>
+
+  <!-- 本の紹介（Amazonアソシエイト・2026-11-04。価格は書かない・読み放題は置いた日に商品ページで確認） -->
+  <section class="bk info-section" aria-labelledby="bk-h">
+    <h2 id="bk-h">ポモドーロと時間の使い方の本</h2>
+    <p class="bk-pr"><span>PR</span>Amazonのリンクです。Amazonのアソシエイトとして、web忍者の砦は適格販売により収入を得ています。</p>
+    <ul class="bk-list">
+      <li><a href="https://www.amazon.co.jp/dp/B07NRKH13Z?tag=kkp15-22" target="_blank" rel="nofollow sponsored noopener" onclick="if(typeof gtag==='function')gtag('event','aff_amazon_book')"><b>どんな仕事も「25分＋5分」で結果が出る ポモドーロ・テクニック入門</b><span>フランチェスコ・シリロ</span></a></li>
+      <li><a href="https://www.amazon.co.jp/dp/B0B3MJNC7N?tag=kkp15-22" target="_blank" rel="nofollow sponsored noopener" onclick="if(typeof gtag==='function')gtag('event','aff_amazon_book')"><b>限りある時間の使い方</b><span>オリバー・バークマン</span></a></li>
+      <li><a href="https://www.amazon.co.jp/dp/4479795820?tag=kkp15-22" target="_blank" rel="nofollow sponsored noopener" onclick="if(typeof gtag==='function')gtag('event','aff_amazon_book')"><b>脳のパフォーマンスを最大まで引き出す 神・時間術</b><span>樺沢紫苑</span></a></li>
+    </ul>
+  </section>
 
 <!-- AdSense ② フッター直前 -->
 <div class="ad-slot">
