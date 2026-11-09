@@ -549,6 +549,9 @@
     align-items: center;
     justify-content: center;
   }
+  /* 押せる範囲だけ周りに8px広げる（見た目は28pxの丸のまま・合計44px） */
+  .tp-btn{position:relative}
+  .tp-btn::before{content:"";position:absolute;inset:-8px}
   .tp-btn:hover { background: var(--tomato); color: white; }
   .tp-val {
     font-size: 1rem;
